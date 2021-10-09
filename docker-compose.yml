@@ -3,6 +3,8 @@ version: '3'
 services:
     mysql:
         image: mysql:5.7
+        volumes:
+            - db_data:/var/lib/mysql
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: wordpress
@@ -14,6 +16,8 @@ services:
         depends_on:
             - mysql
         image: wordpress:latest
+        volumes:
+            - ./html:/var/www/html
         links:
             - mysql
         ports:
@@ -24,3 +28,5 @@ services:
             WORDPRESS_DB_USER: wordpress
             WORDPRESS_DB_NAME: wordpress
             WORDPRESS_DB_PASSWORD: wordpress
+volumes:
+    db_data:
